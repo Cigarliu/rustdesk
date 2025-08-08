@@ -7,6 +7,7 @@ import 'package:flutter_hbb/models/peer_tab_model.dart';
 import 'package:flutter_hbb/models/state_model.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_hbb/common/widgets/login.dart';
 
 import '../../common.dart';
 import '../../common/formatter/id_formatter.dart';
@@ -64,7 +65,18 @@ class _PeerCardState extends State<_PeerCard>
     return GestureDetector(
         onDoubleTap: peerTabModel.multiSelectionMode
             ? null
-            : () => widget.connect(context, peer.id),
+            : () 
+        {
+      if (!gFFI.userModel.isLogin) {
+          showToast(translate('Please login first'));
+          loginDialog();
+          return;
+        }
+       widget.connect(context, peer.id)
+            
+        }
+        
+   ,
         onTap: () {
           if (peerTabModel.multiSelectionMode) {
             peerTabModel.select(peer);
@@ -72,6 +84,13 @@ class _PeerCardState extends State<_PeerCard>
             if (isMobile) {
               widget.connect(context, peer.id);
             } else {
+      if (!gFFI.userModel.isLogin) {
+        showToast(translate('Please login first'));
+        loginDialog();
+        return;
+      }
+
+                
               peerTabModel.select(peer);
             }
           }
