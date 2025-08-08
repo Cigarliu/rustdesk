@@ -331,6 +331,17 @@ class _ConnectionPageState extends State<ConnectionPage>
       {bool isFileTransfer = false,
       bool isViewCamera = false,
       bool isTerminal = false}) {
+
+  // 检查登录状态
+  final userInfo = UserModel.getLocalUserInfo();
+  if (userInfo == null || userInfo.isEmpty) {
+    // 显示需要登录的提示
+    showToast(translate('Please login first'));
+    // 或者直接弹出登录对话框
+    loginDialog();
+    return;
+  }
+    
     var id = _idController.id;
     connect(context, id,
         isFileTransfer: isFileTransfer,
