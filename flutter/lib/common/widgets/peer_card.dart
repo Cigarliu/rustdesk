@@ -72,7 +72,7 @@ class _PeerCardState extends State<_PeerCard>
           loginDialog();
           return;
         }
-       widget.connect(context, peer.id)
+       widget.connect(context, peer.id);
             
         }
         
